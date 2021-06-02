@@ -4,10 +4,10 @@ This project stems from a desire to have OpenStack/RHEV capabilities in a simple
 How did we arrive at the name `Po' Boy Cloud`?  Similar to offerings in some grocery stores where one can purchase a [po' boy sub](https://www.delightedcooking.com/what-is-a-poboy-sandwich.htm), this project aims for a similar every man's cloud.
 
 ## Concepts
-We utilize keyless [ssh](https://en.wikipedia.org/wiki/Secure_Shell) to interact with hosts.
+We prefer keyless [ssh](https://en.wikipedia.org/wiki/Secure_Shell) to interact with hosts.
 
 ### Volumes
-Volumes represent locations where VMs are defined and/or "disks" can be added to running VMs.  The only requirement is those locations be accessible via NFS.  Please note, volumes may also exist on Compute Nodes.
+Volumes represent locations where VMs are defined and/or `disks` can be added to running VMs.  The only requirement is those locations be accessible via NFS.  Please note, volumes may also exist on Compute Nodes.
 
 Configuration is `${HOME}/.flossware/pbc/volume`
 
