@@ -44,6 +44,8 @@ To start using [pbc](https://github.com/FlossWare/pbc), run the [setup.sh]() scr
 
 ### Virtual Machines
 
+#### Defining
+
 #### Creating
 
 ##### Net New
