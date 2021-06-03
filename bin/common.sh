@@ -22,8 +22,7 @@
 # Common functionality
 #
 export PBC_HOME=${HOME}/.FlossWare/pbc
-export COMPUTE_HOME=${PBC_HOME}/compute
-export FLAVOR_HOME=${PBC_HOME}/flavor
-export PARTITION_HOME=${PBC_HOME}/partition
-export VOLUME_HOME=${PBC_HOME}/volume
-
+export COMPUTE_NODE_HOME=${PBC_HOME}/nodes
+export FLAVOR_HOME=${PBC_HOME}/flavors
+export PARTITION_HOME=${PBC_HOME}/partitions
+export VOLUME_HOME=${PBC_HOME}/volumes

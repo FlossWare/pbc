@@ -4,7 +4,16 @@ This project stems from a desire to have OpenStack/RHEV capabilities in a simple
 How did we arrive at the name `Po' Boy Cloud`?  Similar to offerings in some grocery stores where one can purchase a [po' boy sub](https://www.delightedcooking.com/what-is-a-poboy-sandwich.htm), this project aims for a similar every man's cloud.
 
 ## Concepts
-We use keyless [ssh](https://en.wikipedia.org/wiki/Secure_Shell) to interact with hosts.
+We prefer keyless [ssh](https://en.wikipedia.org/wiki/Secure_Shell) to interact with hosts.
+
+### Compute Nodes
+Compute nodes are bare metal machines running [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) or [Xen](https://en.wikipedia.org/wiki/Xen) and accessible via [ssh](https://en.wikipedia.org/wiki/Secure_Shell).
+
+### Flavors
+Flavors are predefined virtual machines definitions stored as a `template` with default:
+* vCPUs
+* Disk
+* Memory
 
 ### Storage
 
@@ -17,9 +26,6 @@ Configuration is `${HOME}/.flossware/pbc/volumes`
 Partitions represent locations where `disks` can be added to running VMs.  The only requirement is those locations be accessible via NFS.  Please note, partitions may also exist on [compute nodes](https://github.com/FlossWare/pbc#compute-nodes).
 
 Configuration is `${HOME}/.flossware/pbc/partitions`
-
-### Compute Nodes
-Compute nodes are simply bare metal machines running [KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) and accessible via [ssh](https://en.wikipedia.org/wiki/Secure_Shell).
 
 ## Setup
 
