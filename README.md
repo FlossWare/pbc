@@ -50,9 +50,8 @@ To start using [pbc](https://github.com/FlossWare/pbc), run the [setup.sh]() scr
 
 ##### Net New
 Virtual machines can be created using:
-* [KOAN](https://koan.readthedocs.io/en/latest/koan.html) for a net new instance or to define flavors (see the [Flavors]((https://github.com/FlossWare/pbc#flavors) section for more information).
+* [KOAN](https://koan.readthedocs.io/en/latest/koan.html) for a net new instance or to define flavors (see the [Flavors](https://github.com/FlossWare/pbc#flavors) section for more information).
 * [virt-install](https://linux.die.net/man/1/virt-install)
 
 ##### Flavor
 Flavors are built/defined using the functionality denoted in the [Net New](https://github.com/FlossWare/pbc#net-new) section.
-
