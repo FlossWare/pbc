@@ -1,19 +1,30 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Assume $1 is the directory name from which we are being run
 
-koan --server=`cat $1/cobbler` --system=$1 --virt
+hosts=`dirname $1`/../host
+name=`basename $1`
+server=`cat $1/server`
+system=`cat $1/system`
 
-if [ -e $1/vcpu ]
-then
-    echo "Setting vCPUs to [`cat $1/vcpu`]"
+for aHost in $hosts/*
+do
+    host=`basename ${aHost}`
+    realHost=`cat ${aHost}`
 
-    virsh setvcpus `cat $1/vcpu`
-fi
+    echo
+    echo "============================================================================"
+    echo "Defining [${name}] on [${host}] -> [${realHost}]"
+    echo "============================================================================"
+    echo
 
-if [ -e $1/memory ]
-then
-    echo "Setting max memory to [`cat $1/memory`]"
+    ssh root@${realHost} koan --server=${server} --system=${system} --virt --virt-name=${name}
 
-    virsh setmaxmem `cat $1/memory`
-fi
+    echo
+    echo "============================================================================"
+    echo "Waiting for ${name} to provision..."
+    echo "============================================================================"
+    echo
+
+    ssh -t root@${realHost} virsh console ${name}
+done

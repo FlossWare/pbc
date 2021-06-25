@@ -2,25 +2,45 @@
 
 # Assume $1 is the directory name from which we are being run
 
-virt-clone --original `cat $1/extends` --name $1 --auto-clone
+hosts=`dirname $1`/../host
+name=`basename $1`
+extends=`cat $1/extends`
 
-virt-sysprep -d $1 --hostname $1
+for aHost in $hosts/*
+do
+    host=`basename ${aHost}`
+    realHost=`cat ${aHost}`
 
-if [ -e $1/vcpu ]
-then
-    "Echo setting vCPUs to [`cat $1/vcpu`]"
+    echo
+    echo "============================================================================"
+    echo "Defining [${name} extends ${extends}] on [${realHost}] -> [${host}]"
+    echo "============================================================================"
+    echo
 
-    virsh setvcpus `cat $1/vcpu`
-fi
+    ssh root@${realHost} virt-clone --original ${extends} --name ${name} --auto-clone
 
-if [ -e $1/memory ]
-then
-    virsh setmaxmem `cat $1/memory`
-fi
+    ssh root@${realHost} virt-sysprep -d ${name} --hostname ${name}
 
-if [ -e $1/disk ]
-then
-    echo "Setting max memory to [`cat $1/disk`]"
+    if [ -e $1/vcpu ]
+    then
+        echo "    setting vCPUs to [`cat $1/vcpu`]"
 
-    qemu-img resize /var/lib/libvirt/images/$1.* `cat $1/disk`
-fi
+        ssh root@${realHost} virsh setvcpus --count `cat $1/vcpu`
+    fi
+
+    if [ -e $1/memory ]
+    then
+        echo "    Setting max memory to [`cat $1/disk`]"
+
+        ssh root@${realHost} virsh setmaxmem --size `cat $1/memory`
+    fi
+
+    if [ -e $1/disk ]
+    then
+        echo "   Resizing disk [`cat $1/disk`]"
+
+        imgFile=/var/lib/libvirt/images/${name}.*
+
+        ssh root@${realHost} qemu-img resize ${imgFile} `cat $1/disk`
+    fi
+done
