@@ -17,22 +17,38 @@ do
     echo "============================================================================"
     echo
 
+    echo "============================================================================"
+    echo "Cloning [${extends}] -> [${name}]..."
+    echo "============================================================================"
+
     ssh root@${realHost} virt-clone --original ${extends} --name ${name} --auto-clone
 
+    echo
+    echo "============================================================================"
+    echo "Prepping [${name}]..."
+    echo "============================================================================"
+
     ssh root@${realHost} virt-sysprep -d ${name} --hostname ${name}
+
+    echo
+    echo "============================================================================"
+    echo "Starting [${name}]..."
+    echo "============================================================================"
+
+    #ssh root@${realHost} virsh start ${name}
 
     if [ -e $1/vcpu ]
     then
         echo "    setting vCPUs to [`cat $1/vcpu`]"
 
-        ssh root@${realHost} virsh setvcpus --count `cat $1/vcpu`
+        ssh root@${realHost} virsh setvcpus --count `cat $1/vcpu` ${name} --config
     fi
 
     if [ -e $1/memory ]
     then
-        echo "    Setting max memory to [`cat $1/disk`]"
+        echo "    Setting max memory to [`cat $1/memory`]"
 
-        ssh root@${realHost} virsh setmaxmem --size `cat $1/memory`
+        ssh root@${realHost} virsh setmaxmem --size `cat $1/memory` ${name} --config
     fi
 
     if [ -e $1/disk ]
@@ -43,4 +59,8 @@ do
 
         ssh root@${realHost} qemu-img resize ${imgFile} `cat $1/disk`
     fi
+
+    #ssh root@${realHost} virsh shutdown ${name}
+
+    #ssh -t root@${realHost} virsh console ${name}
 done
